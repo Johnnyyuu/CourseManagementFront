@@ -16,7 +16,13 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 import * as echarts from 'echarts'
+
+//api
+const axios = require('axios');
 Vue.prototype.$echarts = echarts
+Vue.prototype.$http = axios.create({
+    baseURL: 'http://localhost:8000/api'
+})
 
 /**
  * If you don't want to use mock-server

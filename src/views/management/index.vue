@@ -69,8 +69,8 @@
         </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="showadd = false">取 消</el-button>
-        <el-button type="primary" @click="showadd = false">确 定</el-button>
+        <el-button @click="cancelAdd()">取 消</el-button>
+        <el-button type="primary" @click="addCourse()">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -95,10 +95,19 @@ export default {
   data() {
     return {
       showadd: false,
-      addForm: {},
+      addForm: {
+        name: "",
+        fullName: "",
+        teacher: "",
+        location: "",
+        time: [],
+        tech: true,
+        emphasis: "",
+      },
       // todo:
       courseList: [
         {
+          _id: null,
           name: "ECE1762",
           fullName: "Algorithms and Data Structure",
           teacher: "Zissis Poulos",
@@ -124,11 +133,40 @@ export default {
     this.fetchData();
   },
   methods: {
+    // add new course to system
+    addCourse() {
+      this.showadd = false;
+      this.$http.post("addCourse", this.addForm).then((response) => {
+        this.$message({
+          message: "Add successful",
+          type: "success",
+        });
+        this.fetchData();
+      });
+    },
     showAdd() {
       this.showadd = true;
     },
+    cancelAdd() {
+      this.showadd = false;
+      this.addForm = {
+        name: "",
+        fullName: "",
+        teacher: "",
+        location: "",
+        time: [],
+        tech: true,
+        emphasis: "",
+      };
+    },
 
-    fetchData() {},
+    // load course list
+    fetchData() {
+      this.$http.get("courseList").then((response) => {
+        // console.log(response);
+        this.courseList = response.data;
+      });
+    },
 
     deleteRow(index, rows) {
       rows.splice(index, 1);
