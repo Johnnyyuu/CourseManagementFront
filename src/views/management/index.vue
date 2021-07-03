@@ -168,6 +168,9 @@ export default {
       });
     },
 
+    //update course list
+    updateCourse() {},
+
     deleteRow(index, rows) {
       rows.splice(index, 1);
     },
