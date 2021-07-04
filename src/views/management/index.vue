@@ -12,16 +12,22 @@
           >Add Course</el-button
         >
       </el-row>
-      <el-table :data="courseList" stripe style="width: 100%">
-        <el-table-column fixed prop="name" label="Code" width="100">
+      <el-row style="margin: 10px 5px"
+        ><span>Search a Course: </span
+        ><el-input
+          v-model="searchInput"
+          placeholder="Input course name or code"
+          style="width: 30%"
+        ></el-input
+      ></el-row>
+      <el-table :data="cur_list" stripe style="width: 100%">
+        <el-table-column fixed prop="name" label="Code"> </el-table-column>
+        <el-table-column fixed prop="fullName" label="Name"> </el-table-column>
+        <el-table-column fixed prop="teacher" label="Teacher">
         </el-table-column>
-        <el-table-column fixed prop="fullName" label="Name" width="180">
+        <el-table-column fixed prop="location" label="Location">
         </el-table-column>
-        <el-table-column fixed prop="teacher" label="Teacher" width="180">
-        </el-table-column>
-        <el-table-column fixed prop="location" label="Location" width="180">
-        </el-table-column>
-        <el-table-column fixed prop="emphasis" label="Emphasis" width="180">
+        <el-table-column fixed prop="emphasis" label="Emphasis">
           <template slot-scope="scope">
             <el-tag
               v-for="(item, key) in scope.row.emphasis"
@@ -34,16 +40,23 @@
         <el-table-column fixed prop="option" label="Options" width="200">
           <template slot-scope="scope">
             <el-button
-              @click.native.prevent="deleteRow(scope)"
-              size="small"
               type="primary"
+              icon="el-icon-edit"
+              circle
+              @click.native.prevent="showEdit(scope.row)"
+            ></el-button>
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              @click.native.prevent="deleteCourse(scope.row)"
             >
-              Edit
             </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
+
     <el-dialog class="dialog" title="Course Info" :visible.sync="showadd">
       <el-form :model="addForm">
         <el-form-item label="Code">
@@ -61,16 +74,40 @@
         <el-form-item label="Emphasis">
           <el-input v-model="addForm.emphasis" autocomplete="off"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelAdd()">取 消</el-button>
         <el-button type="primary" @click="addCourse()">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog class="dialog" title="Course Info" :visible.sync="showedit">
+      <el-form :model="editForm">
+        <el-form-item label="Code">
+          <el-input
+            v-model="editForm.name"
+            autocomplete="off"
+            disabled
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="Name">
+          <el-input v-model="editForm.fullName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Teacher">
+          <el-input v-model="editForm.teacher" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Location">
+          <el-input v-model="editForm.location" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Emphasis">
+          <el-input v-model="editForm.emphasis" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelEdit()">取 消</el-button>
+        <el-button type="primary" @click="editCourse(editForm.id)"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -82,19 +119,21 @@ import "@/styles/main-container.scss";
 // import TimeTable from "../dashboard/components/timeTable";
 // import CourseSelector from "./components/courseSelector";
 export default {
-  // filters: {
-  //   statusFilter(status) {
-  //     const statusMap = {
-  //       published: "success",
-  //       draft: "gray",
-  //       deleted: "danger",
-  //     };
-  //     return statusMap[status];
-  //   },
-  // },
   data() {
     return {
+      searchInput: "",
+      showedit: false,
       showadd: false,
+      editForm: {
+        name: "",
+        fullName: "",
+        teacher: "",
+        location: "",
+        time: [],
+        tech: true,
+        emphasis: null,
+        id: null,
+      },
       addForm: {
         name: "",
         fullName: "",
@@ -102,28 +141,32 @@ export default {
         location: "",
         time: [],
         tech: true,
-        emphasis: "",
+        emphasis: null,
       },
+      // addForm: {},
       // todo:
-      courseList: [
-        {
-          _id: null,
-          name: "ECE1762",
-          fullName: "Algorithms and Data Structure",
-          teacher: "Zissis Poulos",
-          location: "BA207",
-          time: [
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0],
-          ],
-          tech: true,
-          emphasis: ["Computer Engineering", "Statistics"],
-        },
-      ],
+      courseList: [],
+      cur_list: [],
     };
+  },
+  watch: {
+    searchInput: function (value) {
+      this.cur_list = this.courseList.filter((course) => {
+        return (
+          course.name.indexOf(value) !== -1 ||
+          course.fullName.indexOf(value) !== -1
+        );
+      });
+
+      // this.debounce(function () {
+      //   this.cur_list = this.courseList.filter((course) => {
+      //     return (
+      //       course.name.indexOf(value) !== -1 ||
+      //       course.fullName.indexOf(value) !== -1
+      //     );
+      //   });
+      // }, 500);
+    },
   },
   components: {
     // TimeTable,
@@ -133,16 +176,46 @@ export default {
     this.fetchData();
   },
   methods: {
+    // load course list
+    fetchData() {
+      this.$http.get("courseList").then((response) => {
+        // console.log(response);
+        this.courseList = response.data;
+        this.cur_list = this.courseList;
+      });
+    },
+
     // add new course to system
     addCourse() {
       this.showadd = false;
       this.$http.post("addCourse", this.addForm).then((response) => {
-        this.$message({
-          message: "Add successful",
-          type: "success",
-        });
-        this.fetchData();
+        if (response.data.status === 200) {
+          this.$message({
+            message: response.data.message,
+            type: "success",
+          });
+          this.fetchData();
+        } else if (response.data.status === 400) {
+          this.$message({
+            message: response.data.message,
+            type: "warning",
+          });
+        } else {
+          this.$message({
+            message: response.data.message,
+            type: "error",
+          });
+        }
       });
+      this.addForm = {
+        name: "",
+        fullName: "",
+        teacher: "",
+        location: "",
+        time: [],
+        tech: true,
+        emphasis: null,
+      };
     },
     showAdd() {
       this.showadd = true;
@@ -156,31 +229,69 @@ export default {
         location: "",
         time: [],
         tech: true,
-        emphasis: "",
+        emphasis: null,
       };
     },
 
-    // load course list
-    fetchData() {
-      this.$http.get("courseList").then((response) => {
-        // console.log(response);
-        this.courseList = response.data;
+    //edit course info
+    editCourse(id) {
+      let cur_id = id;
+      this.$http
+        .post(`editCourse/${cur_id}`, this.editForm)
+        .then((response) => {
+          if (response.data.status === 200) {
+            this.$message({
+              message: response.data.message,
+              type: "success",
+            });
+            this.fetchData();
+          } else {
+            this.$message({
+              message: response.data.message,
+              type: "warning",
+            });
+          }
+        });
+      this.showedit = false;
+    },
+    showEdit(row) {
+      this.editForm.name = row.name;
+      this.editForm.fullName = row.fullName;
+      this.editForm.teacher = row.teacher;
+      this.editForm.location = row.location;
+      this.editForm.id = row._id;
+      this.showedit = true;
+      //todo:emphasis
+      this.editForm.emphasis = row.emphasis;
+    },
+    cancelEdit() {
+      this.showEdit = false;
+      this.editForm = {};
+    },
+
+    // Delete Course
+    deleteCourse(id) {
+      let cur_id = id;
+      this.$http.delete(`deleteCourse/${cur_id}`).then((response) => {
+        if (response.data.status === 200) {
+          this.$message({
+            message: response.data.message,
+            type: "success",
+          });
+          this.fetchData();
+        }
       });
     },
-
-    //update course list
-    updateCourse() {},
-
-    deleteRow(index, rows) {
-      rows.splice(index, 1);
+    // Search Course
+    debounce(func, delay) {
+      let timer = null;
+      return () => {
+        clearTimeout(timer);
+        setTimeout(() => {
+          func.apply(this);
+        }, delay);
+      };
     },
-    // fetchData() {
-    //   this.listLoading = true;
-    //   getList().then((response) => {
-    //     this.list = response.data.items;
-    //     this.listLoading = false;
-    //   });
-    // },
   },
 };
 </script>
