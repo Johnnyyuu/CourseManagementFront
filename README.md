@@ -29,6 +29,7 @@ update 7.5:
 
 Added request interface throttling and search debounce function
 
+![image](https://user-images.githubusercontent.com/55111215/124474344-fd736180-ddd2-11eb-8789-9cca04846251.png)
 
 
 
@@ -46,7 +47,6 @@ Show the overall situation. Support project overview, quickly add courses, and s
 
 
 
-![image-20210705202006011](C:\Users\johny\AppData\Roaming\Typora\typora-user-images\image-20210705202006011.png)
 
 
 
