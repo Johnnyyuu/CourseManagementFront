@@ -147,11 +147,12 @@ export default {
       // todo:
       courseList: [],
       cur_list: [],
+      timer_search: null,
     };
   },
   watch: {
     searchInput: function (value) {
-      this.debounce(this.filterCourse(value), 500);
+      this.debounce(this.filterCourse, 300, value);
     },
   },
   components: {
@@ -273,19 +274,27 @@ export default {
     filterCourse(value) {
       this.cur_list = this.courseList.filter((course) => {
         return (
-          course.name.indexOf(value) !== -1 ||
-          course.fullName.indexOf(value) !== -1
+          course.name.toLowerCase().indexOf(value) !== -1 ||
+          course.fullName.toLowerCase().indexOf(value) !== -1
         );
       });
     },
-    debounce(func, delay) {
-      let timer = null;
-      return function () {
-        clearTimeout(timer);
-        setTimeout(() => {
-          func.apply(this);
-        }, delay);
-      };
+    // debounce(func, delay) {
+    //   let timer = null;
+    //   return function () {
+    //     clearTimeout(timer);
+    //     timer = setTimeout(() => {
+    //       func.apply(this);
+    //     }, delay);
+    //   };
+    // },
+    debounce(func, delay, value) {
+      if (this.timer_search !== null) {
+        clearTimeout(this.timer_search);
+      }
+      this.timer_search = setTimeout(() => {
+        func(value);
+      }, delay);
     },
   },
 };

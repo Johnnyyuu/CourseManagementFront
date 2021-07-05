@@ -40,9 +40,9 @@ Added request interface throttling and search debounce function
 
 Show the overall situation. Support project overview, quickly add courses, and schedule generation, etc. 
 
-![image-20210705200431498](C:\Users\johny\AppData\Roaming\Typora\typora-user-images\image-20210705200431498.png)
 
 
+![image-20210705202006011](C:\Users\johny\AppData\Roaming\Typora\typora-user-images\image-20210705202006011.png)
 
 
 
