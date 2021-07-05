@@ -61,4 +61,5 @@ Support dynamic display of courses, click to display course details
 #### Course Selection and Emphasis Management Page:
 
 
+Still learning and updating...
 
