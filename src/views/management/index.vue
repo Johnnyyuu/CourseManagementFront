@@ -274,8 +274,8 @@ export default {
     filterCourse(value) {
       this.cur_list = this.courseList.filter((course) => {
         return (
-          course.name.toLowerCase().indexOf(value) !== -1 ||
-          course.fullName.toLowerCase().indexOf(value) !== -1
+          course.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+          course.fullName.toLowerCase().indexOf(value.toLowerCase()) !== -1
         );
       });
     },
