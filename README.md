@@ -20,7 +20,8 @@ When the user logs in as an administrator, the management of the course list (no
 
 Supports course name, code search, etc., and can group courses to manage, click on the course to view the corresponding information.
 
-![image-20210705201046238](C:\Users\johny\AppData\Roaming\Typora\typora-user-images\image-20210705201046238.png)
+
+![image-20210705201046238](https://user-images.githubusercontent.com/55111215/124470433-2f35f980-ddce-11eb-9ecf-5eba223568eb.png)
 
 
 
@@ -40,7 +41,8 @@ Added request interface throttling and search debounce function
 
 Show the overall situation. Support project overview, quickly add courses, and schedule generation, etc. 
 
-![image-20210705200431498](C:\Users\johny\AppData\Roaming\Typora\typora-user-images\image-20210705200431498.png)
+![image-20210705200431498](https://user-images.githubusercontent.com/55111215/124470461-378e3480-ddce-11eb-9b6a-e5dddd4eb3ee.png)
+
 
 
 
@@ -50,7 +52,8 @@ Show the overall situation. Support project overview, quickly add courses, and s
 
 Support dynamic display of courses, click to display course details
 
-![image-20210705200915079](C:\Users\johny\AppData\Roaming\Typora\typora-user-images\image-20210705200915079.png)
+![image-20210705200915079](https://user-images.githubusercontent.com/55111215/124470483-3c52e880-ddce-11eb-9d4a-8e9fb2d80ab0.png)
+
 
 
 
