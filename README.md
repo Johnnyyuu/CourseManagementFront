@@ -4,7 +4,7 @@ This project aims to add Programe and Emphasis management to the UofT system, so
 
 
 
-This is just my simple attempt at front-end development in my graduate course, and the project continues to be updated...
+This is just a simple attempt at front-end development in my graduate course, and the project continues to be updated...
 
 
 
