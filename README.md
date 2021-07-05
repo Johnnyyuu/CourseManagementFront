@@ -41,7 +41,8 @@ Added request interface throttling and search debounce function
 
 Show the overall situation. Support project overview, quickly add courses, and schedule generation, etc. 
 
-![image-20210705200431498](https://user-images.githubusercontent.com/55111215/124470461-378e3480-ddce-11eb-9b6a-e5dddd4eb3ee.png)
+![image-20210705202006011](https://user-images.githubusercontent.com/55111215/124470640-71f7d180-ddce-11eb-989a-b44cc4b9fe3b.png)
+
 
 
 
