@@ -151,21 +151,7 @@ export default {
   },
   watch: {
     searchInput: function (value) {
-      this.cur_list = this.courseList.filter((course) => {
-        return (
-          course.name.indexOf(value) !== -1 ||
-          course.fullName.indexOf(value) !== -1
-        );
-      });
-
-      // this.debounce(function () {
-      //   this.cur_list = this.courseList.filter((course) => {
-      //     return (
-      //       course.name.indexOf(value) !== -1 ||
-      //       course.fullName.indexOf(value) !== -1
-      //     );
-      //   });
-      // }, 500);
+      this.debounce(this.filterCourse(value), 500);
     },
   },
   components: {
@@ -282,10 +268,19 @@ export default {
         }
       });
     },
+
     // Search Course
+    filterCourse(value) {
+      this.cur_list = this.courseList.filter((course) => {
+        return (
+          course.name.indexOf(value) !== -1 ||
+          course.fullName.indexOf(value) !== -1
+        );
+      });
+    },
     debounce(func, delay) {
       let timer = null;
-      return () => {
+      return function () {
         clearTimeout(timer);
         setTimeout(() => {
           func.apply(this);
