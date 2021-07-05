@@ -4,7 +4,7 @@ This project aims to add Programe and Emphasis management to the UofT system, so
 
 
 
-This is just my simple attempt at front-end development in my graduate course, and the project continues to be updated...
+This is just a simple attempt at front-end development in my graduate course, and the project continues to be updated...
 
 
 
@@ -21,13 +21,15 @@ When the user logs in as an administrator, the management of the course list (no
 Supports course name, code search, etc., and can group courses to manage, click on the course to view the corresponding information.
 
 
-![image-20210705201046238](https://user-images.githubusercontent.com/55111215/124470433-2f35f980-ddce-11eb-9ecf-5eba223568eb.png)
+![image](https://user-images.githubusercontent.com/55111215/124474711-71156e80-ddd3-11eb-9b58-6b55cf52bb82.png)
 
 
 
 update 7.5: 
 
 Added request interface throttling and search debounce function
+
+![image](https://user-images.githubusercontent.com/55111215/124474765-8094b780-ddd3-11eb-80b3-4705b41c3a0b.png)
 
 
 
@@ -46,7 +48,6 @@ Show the overall situation. Support project overview, quickly add courses, and s
 
 
 
-![image-20210705202006011](C:\Users\johny\AppData\Roaming\Typora\typora-user-images\image-20210705202006011.png)
 
 
 
