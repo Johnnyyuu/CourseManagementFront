@@ -57,10 +57,9 @@
         >Login</el-button
       >
 
-      <div class="tips">
-        <span style="margin-right: 20px">username: admin</span>
-        <span> password: any</span>
-      </div>
+      <span class="register" @click.prevent="handleRegister"
+        >Register new account</span
+      >
     </el-form>
   </div>
 </template>
@@ -87,8 +86,8 @@ export default {
     };
     return {
       loginForm: {
-        username: "admin",
-        password: "111111",
+        username: "Johnny",
+        password: "123456",
       },
       loginRules: {
         username: [
@@ -144,6 +143,8 @@ export default {
         }
       });
     },
+
+    handleRegister() {},
   },
 };
 </script>
@@ -197,6 +198,15 @@ $bg: #fafafa;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
+.register {
+  color: rgba(3, 2, 0, 0.377);
+  cursor: pointer;
+}
+.register:hover {
+  display: block;
+  color: cadetblue;
+  transform: translateY(-1px);
+}
 .login-container {
   min-height: 100%;
   width: 100%;
@@ -205,7 +215,7 @@ $light_gray: #eee;
 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 380px;
     max-width: 100%;
     padding: 160px 35px 0;
     margin: 0 auto;
