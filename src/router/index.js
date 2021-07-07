@@ -70,8 +70,8 @@ export const constantRoutes = [
       },
       {
         path: 'courserating',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        name: 'courseRating',
+        component: () => import('@/views/courseRating/index'),
         meta: { title: 'CourseRating', icon: 'tree' }
       }
     ]
