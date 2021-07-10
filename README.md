@@ -10,6 +10,10 @@ This is just a simple attempt at front-end development in my graduate course, an
 
 All vue page files are stored in /src/views
 
+#### Login Page:
+support the basic login and register function. Use token for validating.
+![image](https://user-images.githubusercontent.com/55111215/124765935-08f89100-df69-11eb-8ed8-747306c40eec.png)
+
 
 
 #### Management Page:
